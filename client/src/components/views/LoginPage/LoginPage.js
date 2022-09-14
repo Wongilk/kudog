@@ -1,23 +1,34 @@
 import { useDispatch } from "react-redux";
 import { React, useState } from "react";
 import { LoginUser } from "../../../_actions/user_actions";
+import { useNavigate } from "react-router-dom";
+import Auth from "../../../hoc/auth";
+
 const LoginPage = () => {
-  const [email, SetEmail] = useState("");
-  const [password, SetPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const onEmailChange = (e) => {
-    SetEmail(e.target.value);
+    setEmail(e.target.value);
   };
   const onPasswordChange = (e) => {
-    SetPassword(e.target.value);
+    setPassword(e.target.value);
+  };
+  const onClick = () => {
+    navigate("/register");
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    const data = {
+    let data = {
       email: email,
       password: password,
     };
-    dispatch(LoginUser(data));
+    dispatch(LoginUser(data)).then((res) => {
+      console.log(res);
+      if (res.payload.loginSuccess) navigate("/");
+      else alert(res.payload.message);
+    });
   };
   return (
     <div
@@ -39,6 +50,7 @@ const LoginPage = () => {
         <input type="password" value={password} onChange={onPasswordChange} />
 
         <button>Log in</button>
+        <button onClick={onClick}>Register</button>
       </form>
     </div>
   );

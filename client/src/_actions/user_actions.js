@@ -1,13 +1,31 @@
 import axios from "axios";
-import LOGIN_USER from "./types";
+import { LOGIN_USER, REGISTER_USER, AUTH_USER } from "./types";
 
-export function LoginUser(dataToSubmit) {
-  const request = axios
+async function LoginUser(dataToSubmit) {
+  const request = await axios
     .post("/api/users/login", dataToSubmit)
     .then((response) => response.data);
-  console.log(request);
   return {
     type: LOGIN_USER,
     payload: request,
   };
 }
+async function RegisterUser(dataToSubmit) {
+  const request = await axios
+    .post("/api/users/register", dataToSubmit)
+    .then((response) => response.data);
+  return {
+    type: REGISTER_USER,
+    payload: request,
+  };
+}
+async function AuthUser() {
+  const request = await axios
+    .get("/api/users/auth")
+    .then((response) => response.data);
+  return {
+    type: AUTH_USER,
+    payload: request,
+  };
+}
+export { LoginUser, RegisterUser, AuthUser };
