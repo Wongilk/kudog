@@ -1,0 +1,103 @@
+const { find } = require("async");
+const express = require("express");
+const router = express.Router();
+const multer = require("multer");
+const { Product } = require("../model/Product");
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads");
+  },
+  filename: function (req, file, cb) {
+    cb(null, `${Date.now()}_${file.originalname}`);
+  },
+});
+let upload = multer({ storage: storage }).single("file");
+
+router.post("/image", (req, res) => {
+  upload(req, res, (err) => {
+    if (err) {
+      return res.json({ success: false, err });
+    } else {
+      return res.json({
+        success: true,
+        fileName: res.req.file.filename,
+        filePath: res.req.file.path,
+      });
+    }
+  });
+});
+
+router.post("", (req, res) => {
+  const product = new Product(req.body);
+  product.save((err) => {
+    if (err) return res.status(400).json({ success: false, err });
+    else return res.status(200).json({ success: true });
+  });
+});
+
+router.post("/getproducts", (req, res) => {
+  //product 내 모든 정보를 가져옴 find() , populate() : 그 태그에 해당하는 모든 요소 가져옴
+  let limit = req.body.limit;
+  let skip = req.body.skip;
+  //req.body.filters = Filters , key = brand or category
+  let searchWord = req.body.searchWord;
+  let findArg = {};
+
+  for (let key in req.body.filters) {
+    if (req.body.filters[key].length > 0) {
+      findArg[key] = req.body.filters[key];
+    }
+  }
+  console.log(findArg);
+  if (searchWord) {
+    Product.find(findArg)
+      .find({ $text: { $search: searchWord } })
+      .populate("writer")
+      .skip(skip)
+      .limit(limit)
+      .exec((err, productInfo) => {
+        if (err) res.status(400).json({ success: false, err });
+        else
+          return res.status(200).json({
+            success: true,
+            productInfo,
+            postSize: productInfo.length,
+          });
+      });
+  } else {
+    Product.find(findArg)
+      .populate("writer")
+      .skip(skip)
+      .limit(limit)
+      .exec((err, productInfo) => {
+        if (err) res.status(400).json({ success: false, err });
+        else
+          return res.status(200).json({
+            success: true,
+            productInfo,
+            postSize: productInfo.length,
+          });
+      });
+  }
+});
+
+router.get("/product_by_id", (req, res) => {
+  let type = req.query.type;
+  let productIds = req.query.id;
+  if (type === "array") {
+    let ids = req.query.id.split(",");
+    //배열로 만듬
+    productIds = ids.map((item) => {
+      return item;
+    });
+  }
+  Product.find({ _id: { $in: productIds } })
+    .populate("writer")
+    .exec((err, productInfo) => {
+      console.log(productInfo);
+      if (err) res.status(400).json({ success: false, err });
+      else res.status(200).send(productInfo);
+    });
+});
+
+module.exports = router;

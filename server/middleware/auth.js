@@ -7,6 +7,7 @@ let auth = (req, res, next) => {
   User.findByToken(token, (err, user) => {
     if (err) throw err;
     if (!user) return res.json({ isAuth: false, error: true });
+
     //req. token,user에 token,user를 넣어주는 이유 : auth 다음 단계 cb에서 token과 user값을 사용할 수 있도록 하기 위해
     req.token = token;
     req.user = user;

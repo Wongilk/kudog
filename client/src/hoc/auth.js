@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { AuthUser } from "../_actions/user_actions";
 import { useNavigate } from "react-router-dom";
 const Auth = (SpecificComponent, option, adminroute = null) => {
@@ -9,9 +9,11 @@ const Auth = (SpecificComponent, option, adminroute = null) => {
   const AuthenticationCheck = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const user = useRef({});
     useEffect(() => {
       dispatch(AuthUser()).then((response) => {
-        console.log(response);
+        user.current = response.payload;
+        console.log(user);
         //로그인을 하지 않았다면
         if (!response.payload.isAuth) {
           if (option) navigate("/login");
@@ -26,7 +28,7 @@ const Auth = (SpecificComponent, option, adminroute = null) => {
         }
       });
     }, []);
-    return <SpecificComponent />;
+    return <SpecificComponent user={user} />;
   };
   return <AuthenticationCheck />;
 };

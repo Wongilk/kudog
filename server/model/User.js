@@ -23,7 +23,7 @@ const userSchema = mongoose.Schema({
   },
   role: {
     type: Number,
-    default: 0, //0  : normal user
+    default: 0, //0  : normal user  // 1:administrator
   },
   image: String,
   token: {
@@ -31,6 +31,26 @@ const userSchema = mongoose.Schema({
   },
   tokenExp: {
     type: Number,
+  },
+  cart: {
+    type: Array,
+    default: [],
+  },
+  paymentHistory: {
+    type: Array,
+    default: [],
+  },
+  productHistory: {
+    type: Array,
+    default: [],
+  },
+  stamp: {
+    type: Number,
+    default: 0,
+  },
+  address: {
+    type: String,
+    default: "",
   },
 });
 
