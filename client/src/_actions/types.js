@@ -8,3 +8,4 @@ export const REMOVE_CART_ITEM = "remove_cart_item";
 export const ON_BUY_SUCCESS = "on_buy_success";
 export const ORDER_PRODUCT = "order_product";
 export const CHANGE_ADDRESS = "change_address";
+export const CHANGE_PHONENUMBER = "change_phonenumber";

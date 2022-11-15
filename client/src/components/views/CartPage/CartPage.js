@@ -8,6 +8,7 @@ import {
 import CartBlocks from "./sections/CartBlocks";
 import { useSelector } from "react-redux";
 import { Empty, Result } from "antd";
+import Address from "../../../utils/Address";
 
 const CartPage = () => {
   const dispatch = useDispatch();
@@ -36,8 +37,8 @@ const CartPage = () => {
     setTotalCost(total);
     setShowTotal(true);
   };
-  const deleteFromCart = (productId) => {
-    dispatch(RemoveCartItem(productId)).then((response) => {
+  const deleteFromCart = (productId, size) => {
+    dispatch(RemoveCartItem(productId, size)).then((response) => {
       if (!response.payload.productId) {
         setShowTotal(false);
       }
@@ -69,6 +70,14 @@ const CartPage = () => {
         <CartBlocks products={cart} deleteFromCart={deleteFromCart} />
       </div>
 
+      <h4>주소 : </h4>
+      {user ? (
+        <div>
+          <p>{user.address}</p>
+        </div>
+      ) : (
+        ""
+      )}
       {showTotal ? (
         <div style={{ marginTop: "3rem" }}>
           <h2>Total Cost {totalCost} stamps</h2>

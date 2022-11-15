@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Typography } from "antd";
+import { Form, Input, Button, Typography, Select } from "antd";
 import DoUpload from "../../../utils/DoUpload";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { brands } from "../LandingPage/Section/Datas";
+import { categories } from "../LandingPage/Section/Datas";
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -35,22 +37,29 @@ const UploadPage = ({ user }) => {
       });
     setSize(sizeList);
   };
-  const onCategoryChange = (e) => {
-    const categoryList = e.target.value
-      .replace(/ /g, "")
-      .split(",")
-      .map((item) => {
-        return item.toUpperCase();
-      });
-    setCategory(categoryList);
+  const onCategoryChange = (value) => {
+    let values = [...category, value];
+    if (values.length > 2) {
+      if (!["MEN", "WOMEN"].includes(value)) {
+        values = [values[0], value];
+      } else values = [value, values[1]];
+    }
+    if (values.length === 2) {
+      if (!["MEN", "WOMEN"].includes(values[0]))
+        [values[1], values[0]] = [values[0], values[1]];
+    }
+    setCategory(values);
+    console.log(values);
   };
-  const onBrandChange = (e) => {
-    setBrand(e.target.value.toUpperCase());
+  const onBrandChange = (value) => {
+    setBrand(value);
+    console.log(value);
   };
   const updateImages = (newImages) => {
     setImages(newImages);
   };
   const onSubmit = (e) => {
+    console.log(category);
     e.preventDefault();
     if (
       !brand ||
@@ -93,7 +102,14 @@ const UploadPage = ({ user }) => {
       <DoUpload updateImages={updateImages} />
       <Form>
         <label>브랜드</label>
-        <Input type="text" value={brand} onChange={onBrandChange} />
+        <br />
+        <Select onChange={onBrandChange} style={{ width: "100%" }}>
+          {brands.map((brand, index) => (
+            <option key={index} value={brand.name}>
+              {brand.name}
+            </option>
+          ))}
+        </Select>
         <br />
         <br />
         <label>상품명</label>
@@ -112,6 +128,7 @@ const UploadPage = ({ user }) => {
         <Input type="text" value={price} onChange={onPriceChange} />
         <br />
         <br />
+        <label>사이즈</label>
         <Input
           type="text"
           value={size}
@@ -120,12 +137,30 @@ const UploadPage = ({ user }) => {
         />
         <br />
         <br />
-        <Input
-          type="text"
-          value={category}
-          onChange={onCategoryChange}
-          placeholder="ex) Men , Outer or Women , Bottom"
-        />
+        <label>카테고리</label>
+        <br />
+        <Select onChange={onCategoryChange} style={{ width: "50%" }}>
+          {categories.map((item, index) =>
+            index > 1 ? (
+              ""
+            ) : (
+              <option key={index} value={item.name}>
+                {item.name}
+              </option>
+            )
+          )}
+        </Select>
+        <Select onChange={onCategoryChange} style={{ width: "50%" }}>
+          {categories.map((item, index) =>
+            index > 1 ? (
+              <option key={index} value={item.name}>
+                {item.name}
+              </option>
+            ) : (
+              ""
+            )
+          )}
+        </Select>
         <br />
         <br />
         <Button type="submit" onClick={onSubmit}>

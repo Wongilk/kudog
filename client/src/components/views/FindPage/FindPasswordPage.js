@@ -18,6 +18,7 @@ const FindPasswordPage = () => {
   const onNameChange = (e) => {
     setName(e.target.value);
   };
+  //이메일로 온 인증 번호
   const onCertiChange = (e) => {
     setCertificationNum(e.target.value);
   };
@@ -43,7 +44,7 @@ const FindPasswordPage = () => {
         textAlign: "center",
         width: "80%",
         margin: "3rem auto",
-        marginTop: "15%",
+        marginTop: "30%",
       }}
     >
       {authVisible ? (

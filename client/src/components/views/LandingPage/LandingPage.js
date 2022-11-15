@@ -58,7 +58,7 @@ const LandingPage = () => {
     getproducts(body);
     setSkip(0);
   };
-
+  //filters의 id들을 이름으로 바꿔주는 함수 ex) [1,2]=>[MEN,OUTER]
   const changefilter = (filters) => {
     let newfilter = {};
     for (let key in brands) {
@@ -75,12 +75,14 @@ const LandingPage = () => {
 
   const handlefilter = (filters, type) => {
     const newfilters = { ...Filters };
-    //filters는 체크된 것들의 id 집합
-    //ex) brands : [1,2,3] , category : [1]
+    //Filters는 체크된 것들의 id 집합
+
+    //radiobox에서 넘어온 id들을 넣어줌 ex) brands : [1,2,3] , category : [1]
     newfilters[type] = filters;
 
     console.log(newfilters);
     const changedFilters = changefilter(newfilters);
+    //결과 값을 보여줄 때만 바꿔서 전달하고, filters에는 id 값을 유지
     showFilteredResult(changedFilters);
     setFilters(newfilters);
   };

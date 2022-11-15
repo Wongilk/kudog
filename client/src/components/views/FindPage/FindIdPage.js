@@ -3,21 +3,31 @@ import Input from "antd/lib/input/Input";
 import { Form } from "antd";
 import axios from "axios";
 const FindIdPage = () => {
-  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [name, setName] = useState("");
   const [exist, setExist] = useState(false);
-  const onEmailChange = (e) => {
-    setEmail(e.target.value);
+  const [foundEmail, setFoundEmail] = useState("");
+  const onPhoneNumberChange = (e) => {
+    setPhoneNumber(e.target.value);
   };
   const onNameChange = (e) => {
     setName(e.target.value);
   };
-
+  const makeSecretEmail = (email) => {
+    //wongil@naver.com temp = ["wongil","naver.com"]
+    //temp2 = "won"
+    let temp = email.split("@");
+    let temp2 = temp[0].substr(0, temp[0].length / 2);
+    let star = "*".repeat(temp[0].length - temp2.length);
+    temp = temp2 + star + "@" + temp[1];
+    setFoundEmail(temp);
+  };
   const onSubmit = () => {
-    let body = { email: email, name: name };
+    let body = { phoneNumber: phoneNumber, name: name };
     axios.post("/api/users/find_id", body).then((response) => {
       if (response.data.findIdSuccess) setExist(true);
-      setEmail(response.data.user.email);
+      setFoundEmail(response.data.user.email);
+      makeSecretEmail(response.data.user.email);
     });
   };
   return (
@@ -26,17 +36,17 @@ const FindIdPage = () => {
         textAlign: "center",
         width: "80%",
         margin: "3rem auto",
-        marginTop: "15%",
+        marginTop: "30%",
       }}
     >
       <h1>Find your ID</h1>
       <Form>
         <Input
-          type="email"
-          placeholder="write your email when you register"
+          type="text"
+          placeholder="write your phone number when you register"
           style={{ width: "30%" }}
-          value={email}
-          onChange={onEmailChange}
+          value={phoneNumber}
+          onChange={onPhoneNumberChange}
           required
         />
         <br />
@@ -55,7 +65,7 @@ const FindIdPage = () => {
           onClick={onSubmit}
         />
       </Form>
-      {exist ? "Your Email : " + email : ""}
+      {exist ? "Your Email : " + foundEmail : ""}
       <br />
       <a href="/reset_user_password">Find Password</a>
     </div>

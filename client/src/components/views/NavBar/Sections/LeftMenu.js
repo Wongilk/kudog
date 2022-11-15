@@ -1,22 +1,22 @@
-import React from "react";
-import { Menu } from "antd";
-const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
-
-const LeftMenu = (props) => {
+import React, { useState } from "react";
+import { Input } from "antd";
+const { Search } = Input;
+const LeftMenu = ({ refreshSearch }) => {
+  const [searchWord, setSearchWord] = useState("");
+  const onChange = (e) => {
+    setSearchWord(e.currentTarget.value);
+    refreshSearch(e.currentTarget.value);
+  };
   return (
-    //key : item의 고유 id
-    <Menu mode={props.mode}>
-      <Menu.Item key="Home">
-        <a href="/">Home</a>
-      </Menu.Item>
-      <Menu.Item key="Men">
-        <a href="/product">Men</a>
-      </Menu.Item>
-      <Menu.Item key="Women">
-        <a href="/product">Women</a>
-      </Menu.Item>
-    </Menu>
+    <div>
+      <Search
+        placeholder="Search"
+        onChange={onChange}
+        style={{ width: 200 }}
+        value={searchWord}
+      />
+    </div>
   );
 };
+
 export default LeftMenu;

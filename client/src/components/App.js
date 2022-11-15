@@ -15,19 +15,24 @@ import HistoryPage from "./views/Mypage/Sections/HistoryPage";
 import StampPage from "./views/Mypage/Sections/StampPage";
 import HomePage from "./views/HomePage/HomePage";
 import MyPage from "./views/Mypage/MyPage";
+import Header from "./views/Header/Header";
 const App = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <BrowserRouter>
         <NavBar />
-        <div style={{ paddingTop: "69px", minHeight: "calc(100vh - 80px)" }}>
+        <Header />
+        <div style={{ paddingTop: "20px", minHeight: "calc(100vh - 80px)" }}>
           <Routes>
             <Route path="/" element={Auth(HomePage, null)}></Route>
             <Route path="/product" element={Auth(LandingPage, null)}></Route>
             <Route path="/login" element={Auth(LoginPage, false)}></Route>
             <Route path="/register" element={Auth(Regsiter, false)}></Route>
             {/* uploadpage는 관리자만 접근 가능하도록 */}
-            <Route path="/upload" element={Auth(UploadPage, true)}></Route>
+            <Route
+              path="/upload"
+              element={Auth(UploadPage, true, "/upload")}
+            ></Route>
             <Route
               path="/reset_user_id"
               element={Auth(FindIdPage, null)}

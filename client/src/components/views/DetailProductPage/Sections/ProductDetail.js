@@ -12,6 +12,7 @@ const ProductDetail = (detail) => {
       else console.log("추가 실패");
     });
   };
+  //상품 사이즈 render
   const renderSize = (productSize) => {
     if (productSize)
       return productSize.map((item, index) => (

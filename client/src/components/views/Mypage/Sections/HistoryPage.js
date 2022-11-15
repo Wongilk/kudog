@@ -19,8 +19,8 @@ const HistoryPage = () => {
   };
   return (
     //product 구매 기록과 stamp 구매 기록 두 개 보여주기
-    <div style={{ width: "80%", margin: "3rem auto" }}>
-      <h2>Order History</h2>
+    <div className="m-1 mr-5 p-5 border" style={{ width: "70%" }}>
+      <h1>Order History</h1>
       <br />
       <table>
         <thead>

@@ -29,38 +29,43 @@ const StampPage = () => {
     });
   };
   return (
-    <div>
-      <table style={{ width: "30%" }}>
-        <thead>
+    <div className="m-1 mr-5 p-5 border" style={{ width: "70%" }}>
+      <h1 className="mb-5">Buy Stamp</h1>
+      <table style={{ width: "30%", border: "none" }}>
+        <thead class="text-center">
           <tr>
-            <th>
-              <SmileOutlined style={{ fontSize: "30px" }} />
-            </th>
-            <th>
+            <th className="text-center">
               <FrownOutlined style={{ fontSize: "30px" }} />
             </th>
-            <th>
+            <th className="text-center">
               <MehOutlined style={{ fontSize: "30px" }} />
+            </th>
+            <th className="text-center">
+              <SmileOutlined style={{ fontSize: "30px" }} />
             </th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>10개</td>
-            <td>20개</td>
-            <td>30개</td>
+          <tr className="border-bottom">
+            <td className="text-center">10개</td>
+            <td className="text-center">20개</td>
+            <td className="text-center">30개</td>
           </tr>
         </tbody>
         <tfoot>
           <tr>
-            <td>$15</td>
-            <td>$30</td>
-            <td>$45</td>
+            <td className="text-center">$15</td>
+            <td className="text-center">$30</td>
+            <td className="text-center">$45</td>
           </tr>
         </tfoot>
       </table>
-      <select onChange={onChange}>
-        <option>-----</option>
+      <select
+        class="mt-4 mb-5 form-select"
+        style={{ width: "20%" }}
+        onChange={onChange}
+      >
+        <option>——</option>
         <option>10개</option>
         <option>20개</option>
         <option>30개</option>

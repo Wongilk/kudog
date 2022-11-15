@@ -52,6 +52,8 @@ const LoginPage = (props) => {
                   window.localStorage.setItem("rememberME", values.id);
                 } else localStorage.removeItem("rememberMe");
                 navigate("/");
+              } else {
+                alert(response.payload.message);
               }
             })
             .catch((err) => {

@@ -52,6 +52,10 @@ const userSchema = mongoose.Schema({
     type: String,
     default: "",
   },
+  phoneNumber: {
+    type: String,
+    default: "",
+  },
 });
 
 //user정보를 save 하기 전에 function 수행

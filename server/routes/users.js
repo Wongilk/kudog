@@ -62,6 +62,7 @@ router.get("/auth", auth, (req, res) => {
     paymentHistory: req.user.paymentHistory,
     productHistory: req.user.productHistory,
     address: req.user.address,
+    phoneNumber: req.user.phoneNumber,
   });
 });
 
@@ -73,15 +74,14 @@ router.get("/logout", auth, (req, res) => {
   });
 });
 
+//id 찾기
 router.post("/find_id", (req, res) => {
-  console.log(req.body);
   User.findOne(
     {
-      email: req.body.email,
+      phoneNumber: req.body.phoneNumber,
       name: req.body.name,
     },
     (err, user) => {
-      console.log(user);
       if (!user) {
         return res.json({
           findIdSuccess: false,
@@ -91,7 +91,7 @@ router.post("/find_id", (req, res) => {
     }
   );
 });
-
+//비밀번호 찾기
 router.post("/find_password", (req, res) => {
   User.findOne(
     {
@@ -104,10 +104,13 @@ router.post("/find_password", (req, res) => {
           findIdSuccess: false,
           message: "해당 이메일로 가입된 계정이 없습니다.",
         });
-      } else {
+      }
+      // 해당 이메일로 가입한 계정이 있다면
+      else {
+        //이메일로 보낼 인증 번호 생성 후 가입 이메일에 보냄
         const authNum =
           Math.floor(Math.random() * (999999 - 111111 + 1)) + 111111;
-        console.log(authNum);
+        //메일 내용 구성
         const mailOptions = {
           from: "wwwkim99@naver.com",
           to: req.body.email,
@@ -115,7 +118,7 @@ router.post("/find_password", (req, res) => {
           text: "오른쪽 숫자 6자리를 입력해주세요 : " + authNum,
         };
         console.log(mailOptions);
-
+        //메일 보냄
         smtpTransport.sendMail(mailOptions, (err, response) => {
           if (err) {
             console.log(err);
@@ -130,11 +133,14 @@ router.post("/find_password", (req, res) => {
     }
   );
 });
+
+//비밀번호 초기화, db에 암호화하여 저장하기 위해서 bcryt
 router.post("/reset_password", (req, res) => {
   bcrypt.genSalt(10, function (err, salt) {
     if (err) console.log(err);
     bcrypt.hash(req.body.password, salt, function (err, hash) {
       if (err) console.log(err);
+      //암호화 문제 없으면 유저 찾아서 새로운 비밀번호로 설정
       else {
         User.findOneAndUpdate(
           { email: req.body.email },
@@ -166,6 +172,7 @@ router.post("/addtocart", auth, (req, res) => {
         duplicate = true;
       }
     });
+    // 추가하려는 상품이 이미 카트에 존재
     if (duplicate) {
       User.findOneAndUpdate(
         { _id: req.user._id, "cart.id": req.body.productId },
@@ -214,6 +221,7 @@ router.get("/removecartitem", auth, (req, res) => {
       $pull: {
         cart: {
           id: req.query.id,
+          size: req.query.size,
         },
       },
     },
@@ -227,7 +235,6 @@ router.get("/removecartitem", auth, (req, res) => {
           return item.id;
         });
       }
-
       Product.find({ _id: { $in: arr } })
         .populate("writer")
         .exec((err, productInfo) => {
@@ -238,10 +245,11 @@ router.get("/removecartitem", auth, (req, res) => {
   );
 });
 
+//스탬프 구매
 router.post("/successbuy", auth, (req, res) => {
-  //payment모델 payment 에 결제 정보 넣어주기, user stamp 채워주기  , user payment history에도 넣어주기
+  //Todo) payment모델 payment 에 결제 정보 넣어주기, user stamp 채워주기  , user payment history에도 넣어주기
   const date = new Date();
-  //payment 데이터랑 구입한 stamp 가격 만 넘어옴
+  //payment 데이터랑 구입한 stamp 가격, 개수 만 넘어옴
   let history = [];
   let transactionData = {};
   history.push({
@@ -274,85 +282,14 @@ router.post("/successbuy", auth, (req, res) => {
       });
     }
   );
-
-  //1. user collection history에 간단한 결제 정보 넣어주기
-  /*const date = new Date();
-  let history = [];
-  let transactionData = {};
-  req.body.cartDetail.forEach((item) => {
-    history.push({
-      dateOfPurchase: date.toLocaleString("ko-kr"),
-      productName: item.title,
-      productId: item._id,
-      price: item.price,
-      quantity: item.quantity,
-      orderID: req.body.paymentData.orderID,
-    });
-  });
-  transactionData.user = {
-    _id: req.user._id,
-    name: req.user.name,
-    email: req.user.email,
-  };
-  transactionData.data = req.body.paymentData;
-  transactionData.product = history;
-
-  User.findByIdAndUpdate(
-    { _id: req.user._id },
-    {
-      $push: {
-        history: history,
-      },
-      $set: {
-        cart: [],
-      },
-    },
-    { new: true },
-    (err, userInfo) => {
-      if (err) return res.json({ success: false, err });
-      //2.payment collection 안에 자세한 결제 정보 넣어주기
-      const payment = new Payment(transactionData);
-      payment.save((err, doc) => {
-        //doc은 payment에 저장된 정보
-        if (err) return res.json({ success: false, err });
-
-        //3.production collection sold 필드 업데이트 시켜주기
-        //결제한 상품 id ,quantity 목록을 가져오고 db업데이트 => 하나 하나 찾고 조건 검색 = 번거로움 =>async 이용
-        let products = [];
-        doc.product.map((item) => {
-          products.push({ productId: item.productId, quantity: item.quantity });
-        });
-        async.eachSeries(
-          products,
-          (item, callback) => {
-            Product.findOneAndUpdate(
-              { _id: item.productId },
-              {
-                $inc: {
-                  sold: item.quantity,
-                },
-              },
-              { new: false },
-              callback
-            );
-          },
-          (err, doc) => {
-            if (err) return res.status(400).json({ success: false, err });
-            return res
-              .status(200)
-              .json({ success: true, cart: userInfo.cart, cartDetail: [] });
-          }
-        );
-      });
-    }
-  );*/
 });
+
+//상품 주문
 router.post("/orderproduct", auth, (req, res) => {
-  //주문 정보 productHistory에 넣어주고 stamp 차감 , payment collection product에 추가
+  //Todo) 주문 정보 productHistory에 넣어주고 stamp 차감 , payment collection product에 추가
   //** 상품 여러개일때  처리**
   const date = new Date();
   let datas = [];
-  console.log(req.body.cart);
   req.body.cart.map((item, index) => {
     datas[index] = {
       user_id: req.user._id,
@@ -368,7 +305,6 @@ router.post("/orderproduct", auth, (req, res) => {
       date: date.toLocaleString("ko-kr"),
     };
   });
-  console.log(datas);
   let transactionData = {};
 
   transactionData.order = datas;
@@ -400,6 +336,7 @@ router.post("/orderproduct", auth, (req, res) => {
   );
 });
 
+//주소 변경
 router.post("/change_address", auth, (req, res) => {
   let address = req.body.address + "," + req.body.detailAddress;
   User.findOneAndUpdate(

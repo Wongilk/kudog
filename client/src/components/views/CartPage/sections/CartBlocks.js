@@ -22,7 +22,9 @@ const CartBlocks = ({ products, deleteFromCart }) => {
         <td>{item.size}</td>
         <td>{item.price}</td>
         <td>
-          <button onClick={() => deleteFromCart(item._id)}>remove</button>
+          <button onClick={() => deleteFromCart(item._id, item.size)}>
+            remove
+          </button>
         </td>
       </tr>
     ));

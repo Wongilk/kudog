@@ -43,18 +43,21 @@ const MyAccountPage = () => {
     }
   };
   return (
-    <div>
-      <h1>My Account</h1>
+    <div className="m-1 mr-5 p-5 border" style={{ width: "70%" }}>
+      <h1 className="mb-4">My Account</h1>
 
       <p>Name : {user && user.name}</p>
       <p>Email : {user && user.email}</p>
       <p>Address : {user && user.address}</p>
       <p>Remaining Stamps : {user && user.stamp}</p>
-      <button onClick={onAddressChange}>Change address</button>
+      <button class="btn btn-default border" onClick={onAddressChange}>
+        Change address
+      </button>
       {changeAddress ? <Address user={user} /> : ""}
 
-      <br />
-      <button onClick={onPasswordChange}>Change password</button>
+      <button class="m-3 btn btn-default border" onClick={onPasswordChange}>
+        Change password
+      </button>
 
       {changePwd ? (
         <div>

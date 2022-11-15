@@ -1,4 +1,3 @@
-const { find } = require("async");
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
@@ -26,9 +25,10 @@ router.post("/image", (req, res) => {
     }
   });
 });
-
+//상품 업로드
 router.post("", (req, res) => {
   const product = new Product(req.body);
+  console.log(product);
   product.save((err) => {
     if (err) return res.status(400).json({ success: false, err });
     else return res.status(200).json({ success: true });
@@ -42,13 +42,13 @@ router.post("/getproducts", (req, res) => {
   //req.body.filters = Filters , key = brand or category
   let searchWord = req.body.searchWord;
   let findArg = {};
-
+  //findArg 구성
   for (let key in req.body.filters) {
     if (req.body.filters[key].length > 0) {
       findArg[key] = req.body.filters[key];
     }
   }
-  console.log(findArg);
+  // 검색어로 검색 시
   if (searchWord) {
     Product.find(findArg)
       .find({ $text: { $search: searchWord } })
@@ -81,6 +81,7 @@ router.post("/getproducts", (req, res) => {
   }
 });
 
+//product id로 검색
 router.get("/product_by_id", (req, res) => {
   let type = req.query.type;
   let productIds = req.query.id;
@@ -94,7 +95,6 @@ router.get("/product_by_id", (req, res) => {
   Product.find({ _id: { $in: productIds } })
     .populate("writer")
     .exec((err, productInfo) => {
-      console.log(productInfo);
       if (err) res.status(400).json({ success: false, err });
       else res.status(200).send(productInfo);
     });

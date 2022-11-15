@@ -30,83 +30,7 @@ const tailFormItemLayout = {
 };
 
 //Formik : input관리를 위한 라이브러리 , Yup : 유효성 체크
-/*const Regsiter = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [passwordIsMatch, setPasswordIsMatch] = useState(false);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const onNameChange = (e) => {
-    setName(e.target.value);
-  };
-  const onEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-  const onPasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-  const onConfirmPasswordChange = (e) => {
-    setConfirmPassword(e.target.value);
-  };
-  const onSubmit = (e) => {
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      alert("비밀번호가 일치하지 않습니다.");
-      setConfirmPassword("");
-    } else {
-      setPasswordIsMatch(true);
-    }
-    if (passwordIsMatch) {
-      let data = {
-        name: name,
-        email: email,
-        password: password,
-        confirmPassword: confirmPassword,
-      };
-      dispatch(RegisterUser(data)).then((res) => {
-        if (res.payload.success) {
-          alert("가입되었습니다.");
-          console.log("가입완료");
-          navigate("/login");
-        } else alert("fail to sign up");
-      });
-    } else return;
-  };
-  return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        height: "100vh",
-      }}
-    >
-      <form
-        style={{ display: "flex", flexDirection: "column" }}
-        onSubmit={onSubmit}
-      >
-        <label>Name</label>
-        <input type="name" value={name} onChange={onNameChange} />
-        <label>Email</label>
-        <input type="email" value={email} onChange={onEmailChange} />
-        <label>Password</label>
-        <input type="password" value={password} onChange={onPasswordChange} />
-        <label>confirmPassword</label>
-        <input
-          type="password"
-          value={confirmPassword}
-          onChange={onConfirmPasswordChange}
-        />
 
-        <button>Register</button>
-      </form>
-    </div>
-  );
-};
-*/
 const RegisterPage = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -118,6 +42,7 @@ const RegisterPage = (props) => {
         email: "",
         password: "",
         confirmPassword: "",
+        phoneNumber: "",
       }}
       validationSchema={Yup.object().shape({
         name: Yup.string().required("Name is required"),
@@ -131,6 +56,7 @@ const RegisterPage = (props) => {
         confirmPassword: Yup.string()
           .oneOf([Yup.ref("password"), null], "Password is not matched")
           .required("Confirmpassword is required"),
+        phoneNumber: Yup.string().required("Phone number is required"),
       })}
       onSubmit={(values, { setSubmitting }) => {
         console.log("clicked");
@@ -140,6 +66,7 @@ const RegisterPage = (props) => {
             lastName: values.lastName,
             email: values.email,
             password: values.password,
+            phoneNumber: values.phoneNumber,
           };
           dispatch(RegisterUser(dataToSubmit)).then((response) => {
             console.log(response);
@@ -206,6 +133,26 @@ const RegisterPage = (props) => {
                 <div className="input-feedback">{errors.lastName}</div>
               )}
             </Form.Item>
+
+            <Form.Item required label="Phone Number">
+              <Input
+                id="phoneNumber"
+                placeholder="without '-' ex)01011112222"
+                type="text"
+                value={values.phoneNumber}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={
+                  errors.phoneNumber && touched.phoneNumber
+                    ? "text-input error"
+                    : "text-input"
+                }
+              />
+              {errors.phoneNumber && touched.phoneNumber && (
+                <div className="input-feedback">{errors.phoneNumber}</div>
+              )}
+            </Form.Item>
+
             <Form.Item
               required
               label="Email"
