@@ -5,13 +5,13 @@ import Nav from "react-bootstrap/Nav";
 const Header = () => {
   return (
     <div>
-      <h1 className="text-center mt-5 mb-5 display-3">
+      <h1 class="text-center mt-5 mb-5 display-3">
         <a class="text-decoration-none text-dark" href="/">
           KUDOG
         </a>
       </h1>
       <Nav className="justify-content-center" activeKey="/">
-        <Nav.Item class="m-3">
+        <Nav.Item className="m-3">
           <a
             class="nav-link text-dark"
             href="/"
@@ -20,7 +20,7 @@ const Header = () => {
             HOME
           </a>
         </Nav.Item>
-        <Nav.Item class="m-3">
+        <Nav.Item className="m-3">
           <a
             class="nav-link text-dark"
             href="/product"
@@ -30,7 +30,7 @@ const Header = () => {
           </a>
           {/* <Nav.Link href="/product">SHOP</Nav.Link> */}
         </Nav.Item>
-        <Nav.Item class="m-3">
+        <Nav.Item className="m-3">
           <a
             class="nav-link text-dark"
             href="/review"
@@ -39,7 +39,7 @@ const Header = () => {
             REVIEW
           </a>
         </Nav.Item>
-        <Nav.Item class="m-3">
+        <Nav.Item className="m-3">
           <a
             class="nav-link text-dark"
             href="/contact"

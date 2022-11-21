@@ -50,6 +50,7 @@ router.post("/getproducts", (req, res) => {
   }
   // 검색어로 검색 시
   if (searchWord) {
+    console.log(searchWord, findArg);
     Product.find(findArg)
       .find({ $text: { $search: searchWord } })
       .populate("writer")
@@ -57,12 +58,14 @@ router.post("/getproducts", (req, res) => {
       .limit(limit)
       .exec((err, productInfo) => {
         if (err) res.status(400).json({ success: false, err });
-        else
+        else {
+          console.log(productInfo);
           return res.status(200).json({
             success: true,
             productInfo,
             postSize: productInfo.length,
           });
+        }
       });
   } else {
     Product.find(findArg)
@@ -97,6 +100,23 @@ router.get("/product_by_id", (req, res) => {
     .exec((err, productInfo) => {
       if (err) res.status(400).json({ success: false, err });
       else res.status(200).send(productInfo);
+    });
+});
+router.post("/get_all", (req, res) => {
+  Product.find()
+    .populate("writer")
+    .exec((err, productInfo) => {
+      if (err) res.status(400).json({ success: false, err });
+      else res.status(200).send(productInfo);
+    });
+});
+
+router.post("/remove_product", (req, res) => {
+  Product.deleteOne({ _id: req.body.productId })
+    .populate("writer")
+    .exec((err, productInfo) => {
+      if (err) res.status(400).json({ success: false, err });
+      else res.status(200).send({ success: true });
     });
 });
 

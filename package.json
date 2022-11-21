@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "all": "concurrently \" npm run start\" \"npm run start --prefix client"
+    "all": "concurrently \" npm run start\" \"npm run start --prefix client\""
   },
   "author": "Wongil Kim",
   "license": "ISC",

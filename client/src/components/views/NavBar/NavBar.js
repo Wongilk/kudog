@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState } from "react";
 import LeftMenu from "./Sections/LeftMenu";
 import RightMenu from "./Sections/RightMenu";
 import { Drawer, Button } from "antd";
@@ -15,7 +15,7 @@ const NavBar = () => {
     setVisible(false);
   };
   return (
-    <nav class="menu p-3" style={{ width: "100%" }}>
+    <nav className="menu p-3" style={{ width: "100%" }}>
       <div className="menu__container">
         <div className="menu_left">
           <LeftMenu mode="horizontal" />

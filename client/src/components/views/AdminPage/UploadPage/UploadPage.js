@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Form, Input, Button, Typography, Select } from "antd";
-import DoUpload from "../../../utils/DoUpload";
+import DoUpload from "../../../../utils/DoUpload";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { brands } from "../LandingPage/Section/Datas";
-import { categories } from "../LandingPage/Section/Datas";
+import { brands } from "../../LandingPage/Section/Datas";
+import { categories } from "../../LandingPage/Section/Datas";
 
 const { Title } = Typography;
 const { TextArea } = Input;

@@ -44,7 +44,7 @@ const FindPasswordPage = () => {
         textAlign: "center",
         width: "80%",
         margin: "3rem auto",
-        marginTop: "30%",
+        marginTop: "15%",
       }}
     >
       {authVisible ? (

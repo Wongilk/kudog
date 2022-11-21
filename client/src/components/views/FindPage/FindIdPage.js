@@ -36,7 +36,7 @@ const FindIdPage = () => {
         textAlign: "center",
         width: "80%",
         margin: "3rem auto",
-        marginTop: "30%",
+        marginTop: "15%",
       }}
     >
       <h1>Find your ID</h1>

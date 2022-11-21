@@ -353,4 +353,23 @@ router.post("/change_address", auth, (req, res) => {
     }
   );
 });
+
+//번호 변경
+router.post("/change_phonenumber", auth, (req, res) => {
+  console.log(req.body);
+  User.findOneAndUpdate(
+    { _id: req.user._id },
+    {
+      $set: {
+        phoneNumber: req.body.phoneNumber,
+      },
+    },
+    { new: true },
+    (err, userInfo) => {
+      if (err) return res.status(400).json({ success: false, err });
+      else return res.status(200).json({ success: true, userInfo });
+    }
+  );
+});
+
 module.exports = router;

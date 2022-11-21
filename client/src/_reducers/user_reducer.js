@@ -9,6 +9,7 @@ import {
   ON_BUY_SUCCESS,
   ORDER_PRODUCT,
   CHANGE_ADDRESS,
+  CHANGE_PHONENUMBER,
 } from "../_actions/types";
 
 const userReducer = (state = {}, action) => {
@@ -82,7 +83,15 @@ const userReducer = (state = {}, action) => {
           address: action.payload.userInfo.address,
         },
       };
-
+    case CHANGE_PHONENUMBER:
+      console.log(action.payload);
+      return {
+        ...state,
+        userData: {
+          ...state.userData,
+          phoneNumber: action.payload.userInfo.phoneNumber,
+        },
+      };
     default:
       return state;
   }

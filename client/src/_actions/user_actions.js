@@ -165,17 +165,15 @@ async function ChangeAddress(address, detailAddress) {
   };
 }
 //전화번호 변경
-async function ChangePhoneNumber(userid, newPhoneNumber) {
+async function ChangePhoneNumber(newPhoneNumber) {
   let body = {
-    //address가 api로 받은 주소 , detailaddress가 사용자가 입력한 상세주소
-    user_id: userid,
-    newPhoneNumber: newPhoneNumber,
+    phoneNumber: newPhoneNumber,
   };
   const request = await axios
-    .post("/api/users/change_address", body)
+    .post("/api/users/change_phonenumber", body)
     .then((response) => response.data);
   return {
-    type: CHANGE_ADDRESS,
+    type: CHANGE_PHONENUMBER,
     payload: request,
   };
 }

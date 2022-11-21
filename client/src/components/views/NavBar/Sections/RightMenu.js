@@ -32,6 +32,13 @@ const RightMenu = (props) => {
         ) : (
           ""
         )}
+        {user.userData && user.userData.isAdmin ? (
+          <Menu.Item key="delete">
+            <a href="/delete">Delete</a>
+          </Menu.Item>
+        ) : (
+          ""
+        )}
 
         <Menu.Item key="mypage">
           <a className="text-decoration-none" href="/mypage">
