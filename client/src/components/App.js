@@ -18,6 +18,7 @@ import AdminPage from "./views/AdminPage/AdminPage";
 import WriteReview from "./views/Mypage/Sections/WriteReviewPage";
 import WriteReviewPage from "./views/Mypage/Sections/WriteReviewPage";
 import ReviewPage from "./views/Review/ReviewPage";
+import ContactPage from "./views/ContactPage/ContactPage";
 const App = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -28,11 +29,6 @@ const App = () => {
             <Route element={<MainLayout />}>
               <Route path="/" element={Auth(HomePage, null)}></Route>
               <Route path="/product" element={Auth(LandingPage, null)}></Route>
-              {/*AdminPage는 관리자만 접근 가능하도록 */}
-              <Route
-                path="/admin"
-                element={Auth(AdminPage, true, "/upload")}
-              ></Route>
 
               <Route
                 path="/product/:productId"
@@ -47,6 +43,7 @@ const App = () => {
                 element={Auth(WriteReviewPage, true)}
               ></Route>
               <Route path="/review" element={Auth(ReviewPage, true)}></Route>
+              <Route path="/contact" element={Auth(ContactPage, true)}></Route>
             </Route>
 
             {/*안 보여주고 싶은 컴포넌트*/}
@@ -59,6 +56,12 @@ const App = () => {
             <Route
               path="/reset_user_password"
               element={Auth(FindPasswordPage, null)}
+            ></Route>
+
+            {/*AdminPage는 관리자만 접근 가능하도록 */}
+            <Route
+              path="/admin"
+              element={Auth(AdminPage, true, "/upload")}
             ></Route>
           </Routes>
         </div>

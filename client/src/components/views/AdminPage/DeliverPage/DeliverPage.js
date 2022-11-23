@@ -1,6 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
+import { Typography } from "antd";
+const { Title } = Typography;
+
 const DeliverPage = () => {
   const [orders, setOrders] = useState([]);
   useEffect(() => {
@@ -41,15 +44,22 @@ const DeliverPage = () => {
         <td>{element.date}</td>
         <th>{element.dateOfReturn}</th>
         <th>
-          <button onClick={() => onDeliverdClick(item)}>Delivered</button>
+          <button
+            className="btn btn-default border"
+            onClick={() => onDeliverdClick(item)}
+          >
+            Delivered
+          </button>
         </th>
       </tr>
     ));
   };
 
   return (
-    <div className="m-1 mr-5 p-5 border" style={{ width: "70%" }}>
-      <h1>Not checked Products</h1>
+    <div className="" style={{ width: "70%" }}>
+      <Title className="mb-3" level={3}>
+        Not checked Products
+      </Title>
       <table>
         <thead>
           <tr>

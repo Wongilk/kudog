@@ -7,16 +7,7 @@ const LeftMenu = ({ refreshSearch }) => {
     setSearchWord(e.currentTarget.value);
     refreshSearch(e.currentTarget.value);
   };
-  return (
-    <div>
-      <Search
-        placeholder="Search"
-        onChange={onChange}
-        style={{ width: 200 }}
-        value={searchWord}
-      />
-    </div>
-  );
+  return <div></div>;
 };
 
 export default LeftMenu;
