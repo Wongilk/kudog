@@ -2,19 +2,21 @@ import React from "react";
 import { SmileOutlined } from "@ant-design/icons";
 const Footer = () => {
   return (
-    <div
-      style={{
-        height: "80px",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        fontSize: "1rem",
-      }}
-    >
-      <p>
-        Happy Coding <SmileOutlined />
-      </p>
+    <div className="mt-5">
+      <div
+        className="text-bg-light p-3"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: "1rem",
+        }}
+      >
+        <p>
+          <SmileOutlined />
+        </p>
+      </div>
     </div>
   );
 };

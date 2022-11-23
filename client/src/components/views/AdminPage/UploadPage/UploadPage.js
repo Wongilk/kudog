@@ -40,16 +40,6 @@ const UploadPage = () => {
     setSize(sizeList);
   };
   const onCategoryChange = (value) => {
-    /*let values = [...category, value];
-    if (values.length > 2) {
-      if (!["MEN", "WOMEN"].includes(value)) {
-        values = [values[0], value];
-      } else values = [value, values[1]];
-    }
-    if (values.length === 2) {
-      if (!["MEN", "WOMEN"].includes(values[0]))
-        [values[1], values[0]] = [values[0], values[1]];
-    }*/
     setCategory(value);
   };
   const onGenderChange = (value) => {

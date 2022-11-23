@@ -299,6 +299,7 @@ router.post("/orderproduct", auth, (req, res) => {
       stamps: item.price,
       date: date.toLocaleString("ko-kr"),
       dateOfReturn: "",
+      review: false,
     };
   });
   let transactionData = {};

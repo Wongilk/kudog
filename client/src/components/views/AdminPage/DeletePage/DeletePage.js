@@ -1,5 +1,9 @@
 import axios from "axios";
+
 import React, { useEffect, useState } from "react";
+
+import { Typography } from "antd";
+const { Title } = Typography;
 
 function DeletePage() {
   const [products, setProducts] = useState([]);
@@ -25,7 +29,6 @@ function DeletePage() {
     }
   };
   const renderProduct = (products) => {
-    console.log(products);
     return products.map((item, index) => (
       <tr key={index}>
         <td>
@@ -38,7 +41,10 @@ function DeletePage() {
         <td>{item.brand}</td>
         <td>{item.title}</td>
         <td>
-          <button onClick={() => onRemoveProduct(item._id)}>
+          <button
+            className="btn btn-default border"
+            onClick={() => onRemoveProduct(item._id)}
+          >
             remove product
           </button>
         </td>
@@ -46,14 +52,16 @@ function DeletePage() {
     ));
   };
   return (
-    <div>
+    <div className="w-75">
+      <Title className="mb-3" level={3}>
+        상품 정보 삭제
+      </Title>
       <table>
         <thead>
           <tr>
             <th>Product Image</th>
             <th>Brand</th>
             <th>Title</th>
-            <th>delete</th>
           </tr>
         </thead>
         <tbody>{products ? renderProduct(products) : null}</tbody>

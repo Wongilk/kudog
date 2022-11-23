@@ -69,55 +69,86 @@ const MyAccountPage = () => {
       <p>Name : {user && user.name}</p>
       <p>Email : {user && user.email}</p>
       <p>Address : {user && user.address}</p>
-      <p>phoneNumber : {user && user.phoneNumber}</p>
       <p>Remaining Stamps : {user && user.stamp}</p>
+      <p>phoneNumber : {user && user.phoneNumber}</p>
+      <p>
+        <button class="btn btn-default border" onClick={onAddressChange}>
+          Change address
+        </button>
+        {changeAddress ? <Address user={user} /> : ""}
+      </p>
 
-      <button class="btn btn-default border" onClick={onAddressChange}>
-        Change address
-      </button>
-      {changeAddress ? <Address user={user} /> : ""}
+      <p>
+        <button class="btn btn-default border" onClick={onPhoneNumberChange}>
+          Change phoneNumber
+        </button>
 
-      <button class="m-3 btn btn-default border" onClick={onPhoneNumberChange}>
-        Change phoneNumber
-      </button>
-      {changePhoneNumber ? (
-        <div>
-          <form>
-            <label>Enter new phoneNumber</label>
-            <input
-              type="tel"
-              value={newPhoneNumber}
-              onChange={newPhoneNumberChange}
-            />
-            <input
-              type="button"
-              value="Change"
-              onClick={onPhoneNumberChangeClick}
-            />
-          </form>
-        </div>
-      ) : (
-        ""
-      )}
+        {changePhoneNumber ? (
+          <div className="m-3">
+            <form>
+              <p>
+                <input
+                  className="border p-2 w-50"
+                  type="tel"
+                  placeholder="Enter new phoneNumber"
+                  value={newPhoneNumber}
+                  onChange={newPhoneNumberChange}
+                />
+              </p>
+              <p>
+                <input
+                  type="button"
+                  className="btn btn-secondary border"
+                  value="Change"
+                  onClick={onPhoneNumberChangeClick}
+                />
+              </p>
+            </form>
+          </div>
+        ) : (
+          ""
+        )}
+      </p>
 
-      <button class="btn btn-default border" onClick={onPasswordChange}>
-        Change password
-      </button>
-      {changePwd ? (
-        <div>
-          <form>
-            <label>Enter new password </label>
-            <input value={newPwd} onChange={newPwdChange} />
-            <br />
-            <label>Enter confirm password</label>
-            <input value={newConfirmPwd} onChange={newConfirmPwdChange} />
+      <p>
+        <button class="btn btn-default border" onClick={onPasswordChange}>
+          Change password
+        </button>
+        {changePwd ? (
+          <div className="m-3">
+            <form>
+              <p>
+                <input
+                  className="border p-2 w-50"
+                  placeholder="Enter new password"
+                  value={newPwd}
+                  onChange={newPwdChange}
+                />
+              </p>
 
-            <input type="button" value="Change" onClick={onPwdChangeClick} />
-          </form>
-        </div>
-      ) : (
-        ""
-      )}
+              <p>
+                <input
+                  className="border p-2 w-50"
+                  placeholder="Enter confirm password"
+                  value={newConfirmPwd}
+                  onChange={newConfirmPwdChange}
+                />
+              </p>
+
+              <p>
+                <input
+                  className="btn btn-secondary border"
+                  type="button"
+                  value="Change"
+                  onClick={onPwdChangeClick}
+                />
+              </p>
+            </form>
+          </div>
+        ) : (
+          ""
+        )}
+      </p>
     </div>
   );
 };

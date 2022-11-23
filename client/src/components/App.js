@@ -15,6 +15,9 @@ import HomePage from "./views/HomePage/HomePage";
 import MyPage from "./views/Mypage/MyPage";
 import MainLayout from "../utils/MainLayout";
 import AdminPage from "./views/AdminPage/AdminPage";
+import WriteReview from "./views/Mypage/Sections/WriteReviewPage";
+import WriteReviewPage from "./views/Mypage/Sections/WriteReviewPage";
+import ReviewPage from "./views/Review/ReviewPage";
 const App = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -39,6 +42,11 @@ const App = () => {
               <Route path="/mypage" element={Auth(MyPage, true)}></Route>
               <Route path="/history" element={Auth(HistoryPage, true)}></Route>
               <Route path="/stamp" element={Auth(StampPage, true)}></Route>
+              <Route
+                path="write_review"
+                element={Auth(WriteReviewPage, true)}
+              ></Route>
+              <Route path="/review" element={Auth(ReviewPage, true)}></Route>
             </Route>
 
             {/*안 보여주고 싶은 컴포넌트*/}

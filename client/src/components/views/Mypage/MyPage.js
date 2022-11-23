@@ -5,36 +5,49 @@ import MyAccountPage from "./Sections/MyAccountPage";
 import StampPage from "./Sections/StampPage";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import WriteReviewPage from "./Sections/WriteReviewPage";
 
 const MyPage = () => {
   const navigate = useNavigate();
   const [account, setAccount] = useState(true);
   const [address, setAddress] = useState(false);
-  const [wallet, setWallet] = useState(false);
   const [history, setHistory] = useState(false);
+  const [review, setReview] = useState(false);
   const [stamp, setStamp] = useState(false);
-
+  const [proInfoForReview, setProInfoForReview] = useState({});
+  const [selectItemId, setSelectItemId] = useState("");
   const onAccountClick = () => {
     setAccount(true);
     setAddress(false);
-    setWallet(false);
     setHistory(false);
     setStamp(false);
+    setReview(false);
   };
   const onHistoryClick = () => {
     setAccount(false);
     setAddress(false);
-    setWallet(false);
     setHistory(true);
     setStamp(false);
+    setReview(false);
   };
   const onStampClick = () => {
     setAccount(false);
     setAddress(false);
-    setWallet(false);
     setHistory(false);
     setStamp(true);
+    setReview(false);
   };
+
+  const onWriteReviewClick = (element, item_id) => {
+    setAccount(false);
+    setAddress(false);
+    setHistory(false);
+    setStamp(false);
+    setReview(true);
+    setProInfoForReview(element);
+    setSelectItemId(item_id);
+  };
+
   const onLogoutClick = async () => {
     await axios.get(`${USER_SERVER}/logout`).then((response) => {
       console.log(response);
@@ -89,12 +102,15 @@ const MyPage = () => {
       </div>
       {account ? (
         <MyAccountPage />
-      ) : wallet ? (
-        ""
       ) : history ? (
-        <HistoryPage />
+        <HistoryPage onWriteReviewClick={onWriteReviewClick} />
       ) : stamp ? (
         <StampPage />
+      ) : review ? (
+        <WriteReviewPage
+          proInfoForReview={proInfoForReview}
+          selectItemId={selectItemId}
+        />
       ) : (
         ""
       )}

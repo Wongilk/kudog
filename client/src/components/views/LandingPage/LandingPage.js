@@ -146,10 +146,10 @@ const LandingPage = () => {
       <br />
       {/*search*/}
       <div
+        className="mb-3"
         style={{
           display: "flex",
           justifyContent: "flex-end",
-          margin: "1rem,auto",
         }}
       >
         <SearchByWords
@@ -161,7 +161,9 @@ const LandingPage = () => {
       <br />
       {postSize >= limit && (
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <button onClick={loadmoreHandler}>더보기</button>
+          <button className="btn btn-default border" onClick={loadmoreHandler}>
+            more
+          </button>
         </div>
       )}
     </div>

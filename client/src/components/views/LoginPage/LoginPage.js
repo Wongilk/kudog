@@ -137,6 +137,7 @@ const LoginPage = (props) => {
 
             <Form.Item>
               <Checkbox
+                className="text-secondary btn-secondary"
                 id="rememberMe"
                 onChange={handleRememberme}
                 checked={rememberMe}
@@ -144,15 +145,17 @@ const LoginPage = (props) => {
                 Remember me
               </Checkbox>
               <a
-                className="login-form-forgot"
+                className="login-form-forgot text-secondary"
                 href="/reset_user_password"
                 style={{ float: "right" }}
               >
                 Find Password
               </a>
-              <a style={{ float: "right" }}> | </a>
+              <a className="text-secondary" style={{ float: "right" }}>
+                &nbsp; | &nbsp;
+              </a>
               <a
-                className="login-form-forgot"
+                className="login-form-forgot text-secondary"
                 href="/reset_user_id"
                 style={{ float: "right" }}
               >
@@ -162,7 +165,6 @@ const LoginPage = (props) => {
                 <Button
                   type="primary"
                   htmlType="submit"
-                  className="login-form-button"
                   style={{ minWidth: "100%" }}
                   disabled={isSubmitting}
                   onSubmit={handleSubmit}
@@ -170,7 +172,7 @@ const LoginPage = (props) => {
                   Log in
                 </Button>
               </div>
-              Or <a href="/register">register now!</a>
+              계정이 없으시다면, <a href="/register">가입하러 가기</a>
             </Form.Item>
           </Form>
         </div>

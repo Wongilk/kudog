@@ -9,6 +9,7 @@ const userRoute = require("./routes/users");
 const orderRoute = require("./routes/orders");
 const productRoute = require("./routes/products");
 const paymentRoute = require("./routes/payments");
+const reviewRoute = require("./routes/reviews");
 //cors = client가 도메인이나 포트가 다른 서버로 요청했을 때 api차단
 const cors = require("cors");
 
@@ -43,4 +44,5 @@ app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
 app.use("/api/orders", orderRoute);
 app.use("/api/payments", paymentRoute);
+app.use("/api/reviews", reviewRoute);
 app.listen(port, () => console.log(`Example app listening on port:${port}!`));
