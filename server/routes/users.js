@@ -59,8 +59,6 @@ router.get("/auth", auth, (req, res) => {
     image: req.user.image,
     cart: req.user.cart,
     stamp: req.user.stamp,
-    paymentHistory: req.user.paymentHistory,
-    productHistory: req.user.productHistory,
     address: req.user.address,
     phoneNumber: req.user.phoneNumber,
   });
@@ -247,7 +245,7 @@ router.get("/removecartitem", auth, (req, res) => {
 
 //스탬프 구매
 router.post("/successbuy", auth, (req, res) => {
-  //Todo) payment모델 payment 에 결제 정보 넣어주기, user stamp 채워주기  , user payment history에도 넣어주기
+  //Todo) payment모델  에 결제 정보 넣어주기, user stamp 채워주기  , user payment history에도 넣어주기
   const date = new Date();
   //payment 데이터랑 구입한 stamp 가격, 개수 만 넘어옴
   let history = [];
@@ -265,9 +263,6 @@ router.post("/successbuy", auth, (req, res) => {
   User.findOneAndUpdate(
     { _id: req.user._id },
     {
-      $push: {
-        paymentHistory: history,
-      },
       $inc: {
         stamp: req.body.product[0],
       },
@@ -286,13 +281,13 @@ router.post("/successbuy", auth, (req, res) => {
 
 //상품 주문
 router.post("/orderproduct", auth, (req, res) => {
-  //Todo) 주문 정보 productHistory에 넣어주고 stamp 차감 , payment collection product에 추가
+  //Todo) stamp 차감 , products 에 추가
   //** 상품 여러개일때  처리**
   const date = new Date();
   let datas = [];
   req.body.cart.map((item, index) => {
     datas[index] = {
-      user_id: req.user._id,
+      user_id: req.user.id,
       name: req.user.name,
       email: req.user.email,
       address: req.user.address,
@@ -303,6 +298,7 @@ router.post("/orderproduct", auth, (req, res) => {
       quantity: item.quantity,
       stamps: item.price,
       date: date.toLocaleString("ko-kr"),
+      dateOfReturn: "",
     };
   });
   let transactionData = {};
@@ -314,9 +310,6 @@ router.post("/orderproduct", auth, (req, res) => {
       $set: {
         cart: [],
         cartDetail: [],
-      },
-      $push: {
-        productHistory: datas,
       },
       $inc: {
         stamp: -req.body.totalCost,

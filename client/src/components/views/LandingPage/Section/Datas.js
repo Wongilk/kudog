@@ -1,30 +1,36 @@
-const categories = [
+const genders = [
   {
     _id: 1,
-    name: "MEN",
+    name: "ALL",
   },
   {
     _id: 2,
-    name: "WOMEN",
+    name: "MEN",
   },
   {
     _id: 3,
+    name: "WOMEN",
+  },
+];
+const categories = [
+  {
+    _id: 1,
     name: "OUTER",
   },
   {
-    _id: 4,
+    _id: 2,
     name: "TOP",
   },
   {
-    _id: 5,
+    _id: 3,
     name: "BOTTOM",
   },
   {
-    _id: 6,
+    _id: 4,
     name: "SHOES",
   },
   {
-    _id: 7,
+    _id: 5,
     name: "ACC",
   },
 ];
@@ -66,4 +72,4 @@ const brands = [
     name: "WORTHWHILE MOVEMENT",
   },
 ];
-export { categories, brands };
+export { categories, brands, genders };

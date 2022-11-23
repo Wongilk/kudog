@@ -5,7 +5,7 @@ import Card from "antd/lib/card/Card";
 import { Row, Col } from "antd";
 import Meta from "antd/lib/card/Meta";
 import RadioBoxes from "./Section/RadioBoxes";
-import { brands, categories } from "./Section/Datas";
+import { brands, categories, genders } from "./Section/Datas";
 import SearchByWords from "./Section/SearchByWords";
 
 const LandingPage = () => {
@@ -16,6 +16,7 @@ const LandingPage = () => {
   const [Filters, setFilters] = useState({
     brand: [],
     category: [],
+    gender: [],
   });
   const [searchWord, setSearchWord] = useState("");
   useEffect(() => {
@@ -69,6 +70,10 @@ const LandingPage = () => {
       if (categories[key]._id === filters.category)
         newfilter["category"] = categories[key].name;
     }
+    for (let key in genders) {
+      if (genders[key]._id === filters.gender)
+        newfilter["gender"] = genders[key].name;
+    }
     console.log(newfilter);
     return newfilter;
   };
@@ -119,13 +124,19 @@ const LandingPage = () => {
     <div style={{ width: "75%", margin: "3rem auto" }}>
       {/*filter*/}
       <Row gutter={(16, 16)}>
-        <Col lg={12} xs={24}>
+        <Col lg={8} xs={24}>
+          <RadioBoxes
+            handlefilter={(filters) => handlefilter(filters, "gender")}
+            type={"gender"}
+          />
+        </Col>
+        <Col lg={8} xs={24}>
           <RadioBoxes
             handlefilter={(filters) => handlefilter(filters, "category")}
             type={"category"}
           />
         </Col>
-        <Col lg={12} xs={24}>
+        <Col lg={8} xs={24}>
           <RadioBoxes
             handlefilter={(filters) => handlefilter(filters, "brand")}
             type={"brand"}

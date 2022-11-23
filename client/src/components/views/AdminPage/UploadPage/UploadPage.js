@@ -4,21 +4,23 @@ import DoUpload from "../../../../utils/DoUpload";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { brands } from "../../LandingPage/Section/Datas";
-import { categories } from "../../LandingPage/Section/Datas";
+import { categories, genders } from "../../LandingPage/Section/Datas";
+import { useSelector } from "react-redux";
 
 const { Title } = Typography;
 const { TextArea } = Input;
 
-const UploadPage = ({ user }) => {
+const UploadPage = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [images, setImages] = useState([]);
   const [size, setSize] = useState([]);
-  const [category, setCategory] = useState([]);
+  const [category, setCategory] = useState("");
   const [brand, setBrand] = useState("");
+  const [gender, setGender] = useState("");
   const navigate = useNavigate();
-
+  const user = useSelector((state) => state.userReducer.userData);
   const onTitleChange = (e) => {
     setTitle(e.target.value);
   };
@@ -38,7 +40,7 @@ const UploadPage = ({ user }) => {
     setSize(sizeList);
   };
   const onCategoryChange = (value) => {
-    let values = [...category, value];
+    /*let values = [...category, value];
     if (values.length > 2) {
       if (!["MEN", "WOMEN"].includes(value)) {
         values = [values[0], value];
@@ -47,19 +49,20 @@ const UploadPage = ({ user }) => {
     if (values.length === 2) {
       if (!["MEN", "WOMEN"].includes(values[0]))
         [values[1], values[0]] = [values[0], values[1]];
-    }
-    setCategory(values);
-    console.log(values);
+    }*/
+    setCategory(value);
   };
+  const onGenderChange = (value) => {
+    setGender(value);
+  };
+
   const onBrandChange = (value) => {
     setBrand(value);
-    console.log(value);
   };
   const updateImages = (newImages) => {
     setImages(newImages);
   };
   const onSubmit = (e) => {
-    console.log(category);
     e.preventDefault();
     if (
       !brand ||
@@ -68,12 +71,13 @@ const UploadPage = ({ user }) => {
       !price ||
       !size ||
       !images ||
-      !category
+      !category ||
+      !gender
     )
       alert("모든 항목을 기입해주세요");
     else {
       const body = {
-        writer: user.current,
+        writer: user._id,
         brand: brand,
         title: title,
         description: description,
@@ -81,6 +85,7 @@ const UploadPage = ({ user }) => {
         size: size,
         category: category,
         images: images,
+        gender: gender,
       };
 
       axios.post("/api/products", body).then((response) => {
@@ -139,27 +144,20 @@ const UploadPage = ({ user }) => {
         <br />
         <label>카테고리</label>
         <br />
-        <Select onChange={onCategoryChange} style={{ width: "50%" }}>
-          {categories.map((item, index) =>
-            index > 1 ? (
-              ""
-            ) : (
-              <option key={index} value={item.name}>
-                {item.name}
-              </option>
-            )
-          )}
+        <Select onChange={onGenderChange} style={{ width: "50%" }}>
+          {genders.map((item, index) => (
+            <option key={index} value={item.name}>
+              {item.name}
+            </option>
+          ))}
         </Select>
+
         <Select onChange={onCategoryChange} style={{ width: "50%" }}>
-          {categories.map((item, index) =>
-            index > 1 ? (
-              <option key={index} value={item.name}>
-                {item.name}
-              </option>
-            ) : (
-              ""
-            )
-          )}
+          {categories.map((item, index) => (
+            <option key={index} value={item.name}>
+              {item.name}
+            </option>
+          ))}
         </Select>
         <br />
         <br />

@@ -42,15 +42,17 @@ router.post("/getproducts", (req, res) => {
   //req.body.filters = Filters , key = brand or category
   let searchWord = req.body.searchWord;
   let findArg = {};
+  console.log(req.body.filters);
   //findArg 구성
   for (let key in req.body.filters) {
     if (req.body.filters[key].length > 0) {
-      findArg[key] = req.body.filters[key];
+      if (key === "gender" && req.body.filters[key] === "ALL") {
+      } else findArg[key] = req.body.filters[key];
     }
   }
+  //console.log(findArg);
   // 검색어로 검색 시
   if (searchWord) {
-    console.log(searchWord, findArg);
     Product.find(findArg)
       .find({ $text: { $search: searchWord } })
       .populate("writer")

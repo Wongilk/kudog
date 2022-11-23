@@ -61,7 +61,6 @@ const userReducer = (state = {}, action) => {
         ...state,
         userData: {
           ...state.userData,
-          paymentHistory: action.payload.userInfo.paymentHistory,
         },
       };
 
@@ -71,7 +70,6 @@ const userReducer = (state = {}, action) => {
         userData: {
           ...state.userData,
           cart: action.payload.userInfo.cart,
-          productHistory: action.payload.userInfo.productHistory,
         },
         cartDetail: action.payload.userInfo.cartDetail,
       };

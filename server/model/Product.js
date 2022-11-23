@@ -37,8 +37,12 @@ const productSchema = mongoose.Schema(
       default: [],
     },
     category: {
-      type: Array,
-      default: [],
+      type: String,
+      default: "",
+    },
+    gender: {
+      type: String,
+      default: "",
     },
     brand: {
       type: String,

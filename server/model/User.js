@@ -36,14 +36,6 @@ const userSchema = mongoose.Schema({
     type: Array,
     default: [],
   },
-  paymentHistory: {
-    type: Array,
-    default: [],
-  },
-  productHistory: {
-    type: Array,
-    default: [],
-  },
   stamp: {
     type: Number,
     default: 0,

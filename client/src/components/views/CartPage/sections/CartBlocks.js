@@ -7,7 +7,6 @@ const CartBlocks = ({ products, deleteFromCart }) => {
       return `http://localhost:5000/${image}`;
     }
   };
-  console.log(products);
   const renderItems = () =>
     products.map((item, index) => (
       <tr key={index}>

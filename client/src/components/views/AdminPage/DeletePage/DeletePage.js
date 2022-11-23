@@ -1,5 +1,4 @@
 import axios from "axios";
-
 import React, { useEffect, useState } from "react";
 
 function DeletePage() {
@@ -54,6 +53,7 @@ function DeletePage() {
             <th>Product Image</th>
             <th>Brand</th>
             <th>Title</th>
+            <th>delete</th>
           </tr>
         </thead>
         <tbody>{products ? renderProduct(products) : null}</tbody>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Collapse, Radio } from "antd";
-import { brands, categories } from "./Datas";
+import { brands, categories, genders } from "./Datas";
 const { Panel } = Collapse;
 const RadioBoxes = ({ handlefilter, type }) => {
   const [value, setValue] = useState("");
@@ -17,6 +17,20 @@ const RadioBoxes = ({ handlefilter, type }) => {
             <Panel header="Brands" key="1">
               <Radio.Group value={value} onChange={onChange}>
                 {brands.map((item) => (
+                  <React.Fragment key={item._id}>
+                    <Radio value={item._id}>{item.name}</Radio>
+                  </React.Fragment>
+                ))}
+              </Radio.Group>
+            </Panel>
+          </Collapse>
+        </div>
+      ) : type === "gender" ? (
+        <div>
+          <Collapse defaultActiveKey={["0"]}>
+            <Panel header="Gender" key="1">
+              <Radio.Group value={value} onChange={onChange}>
+                {genders.map((item) => (
                   <React.Fragment key={item._id}>
                     <Radio value={item._id}>{item.name}</Radio>
                   </React.Fragment>

@@ -5,7 +5,6 @@ import LoginPage from "./views/LoginPage/LoginPage";
 import Regsiter from "./views/RegisterPage/RegsiterPage";
 import Auth from "../hoc/auth";
 import Footer from "./views/Footer/Footer";
-import UploadPage from "./views/AdminPage/UploadPage/UploadPage";
 import DetailProductPage from "./views/DetailProductPage/DetailProductPage";
 import FindPasswordPage from "./views/FindPage/FindPasswordPage";
 import FindIdPage from "./views/FindPage/FindIdPage";
@@ -14,8 +13,8 @@ import HistoryPage from "./views/Mypage/Sections/HistoryPage";
 import StampPage from "./views/Mypage/Sections/StampPage";
 import HomePage from "./views/HomePage/HomePage";
 import MyPage from "./views/Mypage/MyPage";
-import DeletePage from "./views/AdminPage/DeletePage/DeletePage";
 import MainLayout from "../utils/MainLayout";
+import AdminPage from "./views/AdminPage/AdminPage";
 const App = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -26,14 +25,10 @@ const App = () => {
             <Route element={<MainLayout />}>
               <Route path="/" element={Auth(HomePage, null)}></Route>
               <Route path="/product" element={Auth(LandingPage, null)}></Route>
-              {/* uploadpage는 관리자만 접근 가능하도록 */}
+              {/*AdminPage는 관리자만 접근 가능하도록 */}
               <Route
-                path="/upload"
-                element={Auth(UploadPage, true, "/upload")}
-              ></Route>
-              <Route
-                path="/delete"
-                element={Auth(DeletePage, true, "/delete")}
+                path="/admin"
+                element={Auth(AdminPage, true, "/upload")}
               ></Route>
 
               <Route

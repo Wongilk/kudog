@@ -26,20 +26,12 @@ const RightMenu = (props) => {
     return (
       <Menu mode={props.mode}>
         {user.userData && user.userData.isAdmin ? (
-          <Menu.Item key="upload">
-            <a href="/upload">Upload</a>
+          <Menu.Item key="Admin">
+            <a href="/admin">Admin</a>
           </Menu.Item>
         ) : (
           ""
         )}
-        {user.userData && user.userData.isAdmin ? (
-          <Menu.Item key="delete">
-            <a href="/delete">Delete</a>
-          </Menu.Item>
-        ) : (
-          ""
-        )}
-
         <Menu.Item key="mypage">
           <a className="text-decoration-none" href="/mypage">
             MyPage

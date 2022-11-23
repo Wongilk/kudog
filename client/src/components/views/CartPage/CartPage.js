@@ -45,7 +45,7 @@ const CartPage = () => {
     });
   };
   const onOrderClick = () => {
-    //카트 정보 넘겨줘서 productHistory에 넣어주고 stamp 차감
+    //stamp 차감
     let res = false;
     if (totalCost > user.stamp) {
       alert("not enough stamps");
@@ -54,7 +54,6 @@ const CartPage = () => {
     }
     if (res) {
       dispatch(OrderProduct(cart, totalCost)).then((response) => {
-        console.log(response);
         if (response.payload.success) {
           setShowTotal(false);
           setShowSuccess(true);

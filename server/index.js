@@ -6,7 +6,9 @@ const bodyParser = require("body-parser");
 const config = require("./config/key");
 const cookieParser = require("cookie-parser");
 const userRoute = require("./routes/users");
+const orderRoute = require("./routes/orders");
 const productRoute = require("./routes/products");
+const paymentRoute = require("./routes/payments");
 //cors = client가 도메인이나 포트가 다른 서버로 요청했을 때 api차단
 const cors = require("cors");
 
@@ -39,4 +41,6 @@ app.use(cors());
 app.use("/uploads", express.static("uploads"));
 app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
+app.use("/api/orders", orderRoute);
+app.use("/api/payments", paymentRoute);
 app.listen(port, () => console.log(`Example app listening on port:${port}!`));
