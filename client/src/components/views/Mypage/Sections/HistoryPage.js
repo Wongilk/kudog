@@ -18,10 +18,10 @@ const HistoryPage = ({ onWriteReviewClick }) => {
       setPayments(response.data.paymentInfo);
     });
   };
-  const renderOrderHistory = (item, item_id) => {
+  const renderOrderHistory = (item) => {
     return item.map((element, index) => (
-      <tr key={index}>
-        {console.log(element.review)}
+      <tr className="border-bottom" key={index}>
+        {console.log(element)}
         <td>{element.address}</td>
         <td>{element.brand}</td>
         <td>{element.productName}</td>
@@ -34,8 +34,11 @@ const HistoryPage = ({ onWriteReviewClick }) => {
           {element.review ? (
             "written"
           ) : (
-            <button onClick={() => onWriteReviewClick(element, item_id)}>
-              Write review
+            <button
+              className="btn btn-default border"
+              onClick={() => onWriteReviewClick(element)} //수정
+            >
+              review
             </button>
           )}
         </td>
@@ -44,7 +47,7 @@ const HistoryPage = ({ onWriteReviewClick }) => {
   };
   const renderPaymentHistory = (item) => {
     return item.map((element, index) => (
-      <tr key={index}>
+      <tr className="border-bottom" key={index}>
         <td>{element.email}</td>
         <td>{element.paymentData.orderID}</td>
         <td>{element.price}</td>
@@ -54,14 +57,13 @@ const HistoryPage = ({ onWriteReviewClick }) => {
     ));
   };
   return (
-    <div>
+    <div className="m-1 mr-5 p-5 border" style={{ width: "70%" }}>
       <h1>HistoryPage</h1>
 
-      <h1>Stamp History</h1>
-      <br />
+      <h3>Stamp History</h3>
       <table>
         <thead>
-          <tr>
+          <tr className="border-bottom">
             <th>Email</th>
             <th>orderID</th>
             <th>Price</th>
@@ -76,10 +78,10 @@ const HistoryPage = ({ onWriteReviewClick }) => {
       </table>
       <br />
 
-      <h1>Product History</h1>
-      <table>
+      <h3>Product History</h3>
+      <table className="border-bottom">
         <thead>
-          <tr>
+          <tr className="border-bottom">
             <th>Address</th>
             <th>Brand</th>
             <th>ProductName</th>
@@ -92,8 +94,8 @@ const HistoryPage = ({ onWriteReviewClick }) => {
           </tr>
         </thead>
         <tbody>
-          {orders &&
-            orders.map((item) => renderOrderHistory(item.order, item._id))}
+          {orders && orders.map((item) => renderOrderHistory(item.order))}
+          {/**수정 */}
         </tbody>
       </table>
     </div>

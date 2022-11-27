@@ -32,7 +32,7 @@ const productSchema = mongoose.Schema(
       type: Number,
       default: 0,
     },
-    size: {
+    sizeAndQuantity: {
       type: Array,
       default: [],
     },
@@ -66,3 +66,4 @@ productSchema.index(
 const Product = mongoose.model("Product", productSchema);
 
 module.exports = { Product };
+//수정

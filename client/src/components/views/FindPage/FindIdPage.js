@@ -25,9 +25,13 @@ const FindIdPage = () => {
   const onSubmit = () => {
     let body = { phoneNumber: phoneNumber, name: name };
     axios.post("/api/users/find_id", body).then((response) => {
-      if (response.data.findIdSuccess) setExist(true);
-      setFoundEmail(response.data.user.email);
-      makeSecretEmail(response.data.user.email);
+      if (response.data.findIdSuccess) {
+        setExist(true);
+        setFoundEmail(response.data.user.email);
+        makeSecretEmail(response.data.user.email);
+      } else {
+        alert("해당 번호와 이름으로 가입된 이메일이 없습니다");
+      }
     });
   };
   return (

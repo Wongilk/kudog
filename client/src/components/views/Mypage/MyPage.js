@@ -15,7 +15,7 @@ const MyPage = () => {
   const [review, setReview] = useState(false);
   const [stamp, setStamp] = useState(false);
   const [proInfoForReview, setProInfoForReview] = useState({});
-  const [selectItemId, setSelectItemId] = useState("");
+  //const [selectItemId, setSelectItemId] = useState(""); //수정사항 =>삭제
   const onAccountClick = () => {
     setAccount(true);
     setAddress(false);
@@ -38,14 +38,13 @@ const MyPage = () => {
     setReview(false);
   };
 
-  const onWriteReviewClick = (element, item_id) => {
+  const onWriteReviewClick = (element) => {
     setAccount(false);
     setAddress(false);
     setHistory(false);
     setStamp(false);
     setReview(true);
     setProInfoForReview(element);
-    setSelectItemId(item_id);
   };
 
   const onLogoutClick = async () => {
@@ -109,7 +108,7 @@ const MyPage = () => {
       ) : review ? (
         <WriteReviewPage
           proInfoForReview={proInfoForReview}
-          selectItemId={selectItemId}
+          //selectItemId={selectItemId}
         />
       ) : (
         ""

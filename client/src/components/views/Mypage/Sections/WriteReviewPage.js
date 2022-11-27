@@ -3,7 +3,8 @@ import DoUpload from "../../../../utils/DoUpload";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-const WriteReviewPage = ({ proInfoForReview, selectItemId }) => {
+const WriteReviewPage = ({ proInfoForReview }) => {
+  //selectItemId 삭제
   const [description, setDescription] = useState("");
   const [images, setImages] = useState([]);
   const user = useSelector((state) => state.userReducer.userData);
@@ -14,30 +15,29 @@ const WriteReviewPage = ({ proInfoForReview, selectItemId }) => {
   const updateImages = (newImages) => {
     setImages(newImages);
   };
-
+  console.log(!images);
   const onSubmit = () => {
-    let body = {
-      writer: user._id,
-      email: user.email,
-      description: description,
-      date: new Date().toLocaleString("ko-kr"),
-      brand: proInfoForReview.brand,
-      size: proInfoForReview.size,
-      productName: proInfoForReview.productName,
-      images: images,
-
-      selectItemId: selectItemId,
-    };
-
-    axios.post("/api/reviews/store", body).then((response) => {
-      if (response.data.success) {
-        alert("리뷰 등록 완료");
-        navigate("/mypage");
-      }
-    });
+    if (!description || !images) alert("모든 항목을 기입해주세요");
+    else {
+      let body = {
+        writer: user._id,
+        email: user.email,
+        description: description,
+        date: new Date().toLocaleString("ko-kr"),
+        brand: proInfoForReview.brand,
+        size: proInfoForReview.size,
+        productName: proInfoForReview.productName,
+        images: images,
+        selectItemId: proInfoForReview.selectItemId, //수정
+      };
+      axios.post("/api/reviews/store", body).then((response) => {
+        if (response.data.success) {
+          alert("리뷰 등록 완료");
+          navigate("/review");
+        }
+      });
+    }
   };
-  console.log(proInfoForReview);
-  console.log(selectItemId);
   return (
     <div>
       <h1>Write review</h1>

@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import ImageSlider from "../../../utils/ImageSlider";
 const ReviewPage = () => {
   const [reviews, setReviews] = useState([]);
   useEffect(() => {
@@ -11,37 +10,35 @@ const ReviewPage = () => {
 
   const renderReviews = (item) => {
     return (
-      <tr key={item.updatedAt}>
-        <td>
-          <img src={`http://localhost:5000/${item.images}`}></img>
-        </td>
-        <td>{item.email}</td>
-        <td>{item.brand}</td>
-        <td>{item.productName}</td>
-        <td>{item.size}</td>
-        <td>{item.date}</td>
-        <td>{item.description}</td>
-      </tr>
+      <div className="float-start m-2 p-3 border" style={{ width: "250px" }}>
+        <p>
+          <img
+            className="w-100"
+            style={{ height: "250px" }}
+            src={`http://localhost:5000/${item.images}`}
+          ></img>
+        </p>
+        <p className="mb-0 text-muted">{item.brand}</p>
+        <h5>{item.productName}</h5>
+        <p className="mb-0">작성자 : {item.email}</p>
+        <p className="mb-0">구매 사이즈 : {item.size}</p>
+        <p className="bg-light p-2 m-0">{item.description}</p>
+        <p className="text-muted mb-0">{item.date}</p>
+      </div>
     );
   };
   return (
-    <div>
-      <h1>Reviews</h1>
-
-      <table>
-        <thead>
-          <tr>
-            <th>image</th>
-            <th>writer</th>
-            <th>brand</th>
-            <th>productName</th>
-            <th>size</th>
-            <th>Date of written</th>
-            <th>description</th>
-          </tr>
-        </thead>
-        <tbody>{reviews && reviews.map((item) => renderReviews(item))}</tbody>
-      </table>
+    <div className="mt-5">
+      <h4 className="text-center p-5">전체 상품 리뷰</h4>
+      <div className="d-flex justify-content-center">
+        <div className="w-75">
+          {reviews &&
+            reviews
+              .map((item) => renderReviews(item))
+              .slice(0)
+              .reverse()}
+        </div>
+      </div>
     </div>
   );
 };

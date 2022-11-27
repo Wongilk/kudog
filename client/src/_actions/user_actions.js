@@ -1,3 +1,4 @@
+import Item from "antd/lib/list/Item";
 import axios from "axios";
 import {
   LOGIN_USER,
@@ -64,17 +65,19 @@ async function AddToCart(productId, selectSize) {
   };
 }
 
+//수정
 async function GetCartItems(cartItemsIds, userCart) {
   //카트 속 여러개의 아이템을 가져와야 함 => 상품 id 여러개 줌
   //response.data => id에 해당하는 상품 정보
   const Items = []; //return value 카트에 들어감
   //size가 다르지만 같은 상품인 경우를 위해
+
   const pushItem = (productDetail, quantity, size, i) => {
     //깊은 복사 후 사이즈 별 카트 아이템 생성
     const product = JSON.parse(JSON.stringify(productDetail));
     Items.push(product);
-    Items[i].size = size;
-    Items[i].quantity = quantity;
+    Items[i].sizeAndQuantity = [{ size: size, quantity: quantity }];
+    console.log(Items);
   };
 
   const request = await axios
@@ -84,7 +87,6 @@ async function GetCartItems(cartItemsIds, userCart) {
         for (let i = 0; i < userCart.length; i++) {
           console.log(userCart[i]);
           for (let j = 0; j < response.data.length; j++) {
-            console.log(response.data[j]);
             if (userCart[i].id === response.data[j]._id) {
               pushItem(
                 response.data[j],

@@ -15,12 +15,14 @@ const UploadPage = () => {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [images, setImages] = useState([]);
-  const [size, setSize] = useState([]);
+  const [sizeAndQuantity, setSizeAndQuantity] = useState([]);
   const [category, setCategory] = useState("");
   const [brand, setBrand] = useState("");
   const [gender, setGender] = useState("");
+
   const navigate = useNavigate();
   const user = useSelector((state) => state.userReducer.userData);
+  let arr = [];
   const onTitleChange = (e) => {
     setTitle(e.target.value);
   };
@@ -30,14 +32,26 @@ const UploadPage = () => {
   const onPriceChange = (e) => {
     setPrice(e.target.value);
   };
-  const onSizeChange = (e) => {
-    const sizeList = e.target.value
+  const onSizeAndQuantityChange = (e) => {
+    let temp = e.target.value
       .replace(/ /g, "")
       .split(",")
       .map((item) => {
         return item.toUpperCase();
       });
-    setSize(sizeList);
+    setSizeAndQuantity(temp);
+  };
+  const changeSizeAndQuantity = () => {
+    for (let i = 0; i < sizeAndQuantity.length; i++) {
+      let obj = {};
+      if (i % 2 === 0) {
+        obj = {
+          size: sizeAndQuantity[i],
+          quantity: parseInt(sizeAndQuantity[i + 1]),
+        };
+        arr.push(obj);
+      }
+    }
   };
   const onCategoryChange = (value) => {
     setCategory(value);
@@ -45,21 +59,22 @@ const UploadPage = () => {
   const onGenderChange = (value) => {
     setGender(value);
   };
-
   const onBrandChange = (value) => {
     setBrand(value);
   };
   const updateImages = (newImages) => {
     setImages(newImages);
   };
+
   const onSubmit = (e) => {
+    changeSizeAndQuantity();
     e.preventDefault();
     if (
       !brand ||
       !title ||
       !description ||
       !price ||
-      !size ||
+      !sizeAndQuantity ||
       !images ||
       !category ||
       !gender
@@ -72,7 +87,7 @@ const UploadPage = () => {
         title: title,
         description: description,
         price: price,
-        size: size,
+        sizeAndQuantity: arr,
         category: category,
         images: images,
         gender: gender,
@@ -123,12 +138,12 @@ const UploadPage = () => {
         <Input type="text" value={price} onChange={onPriceChange} />
         <br />
         <br />
-        <label>사이즈</label>
+        <label>사이즈와 수량</label>
         <Input
           type="text"
-          value={size}
-          onChange={onSizeChange}
-          placeholder="ex) xs, m , xl 모든 사이즈 기입"
+          value={sizeAndQuantity}
+          onChange={onSizeAndQuantityChange}
+          placeholder="ex) s,1,m,2"
         />
         <br />
         <br />
@@ -160,3 +175,4 @@ const UploadPage = () => {
 };
 
 export default UploadPage;
+//수정

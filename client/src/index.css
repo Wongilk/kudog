@@ -39,3 +39,12 @@ input.error {
   height: 5px;
   margin-top: -5px;
 }
+
+table,
+thead,
+tbody,
+td,
+tr,
+th {
+  border: none !important;
+}

@@ -13,7 +13,13 @@ router.post("/store", (req, res) => {
       Order.findOneAndUpdate(
         {
           $and: [
-            { _id: req.body.selectItemId },
+            {
+              order: {
+                $elemMatch: {
+                  selectItemId: req.body.selectItemId,
+                },
+              },
+            }, //수정
             {
               order: {
                 $elemMatch: {
@@ -44,11 +50,26 @@ router.post("/store", (req, res) => {
 });
 
 router.post("/get_reviews", (req, res) => {
-  Review.find({}, (err, reviewInfo) => {
-    if (err) return res.status(400).json({ success: false, err });
-    else {
-      return res.status(200).json({ success: true, reviewInfo });
-    }
-  });
+  console.log(req.body.product_id);
+  if (req.body.product_id) {
+    Review.find(
+      {
+        selectItemId: req.body.product_id,
+      },
+      (err, reviewInfo) => {
+        if (err) return res.status(400).json({ success: false, err });
+        else {
+          return res.status(200).json({ success: true, reviewInfo });
+        }
+      }
+    );
+  } else {
+    Review.find({}, (err, reviewInfo) => {
+      if (err) return res.status(400).json({ success: false, err });
+      else {
+        return res.status(200).json({ success: true, reviewInfo });
+      }
+    });
+  }
 });
 module.exports = router;

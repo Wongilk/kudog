@@ -281,8 +281,9 @@ router.post("/successbuy", auth, (req, res) => {
 
 //상품 주문
 router.post("/orderproduct", auth, (req, res) => {
-  //Todo) stamp 차감 , products 에 추가
+  //Todo) stamp 차감 , order table에 추가 , product table에서 해당상품 quatity 감소
   //** 상품 여러개일때  처리**
+  //cart는 cartDetail
   const date = new Date();
   let datas = [];
   req.body.cart.map((item, index) => {
@@ -294,12 +295,16 @@ router.post("/orderproduct", auth, (req, res) => {
 
       brand: item.brand,
       productName: item.title,
-      size: item.size,
-      quantity: item.quantity,
+      size: item.sizeAndQuantity[0].size,
+      quantity: item.sizeAndQuantity[0].quantity,
       stamps: item.price,
       date: date.toLocaleString("ko-kr"),
       dateOfReturn: "",
       review: false,
+      /*수정*/
+      selectItemId: item._id,
+      isReturned: false,
+      //반납 여부
     };
   });
   let transactionData = {};
@@ -323,7 +328,35 @@ router.post("/orderproduct", auth, (req, res) => {
         const order = new Order(transactionData);
         order.save((err, doc) => {
           if (err) return res.status(400).json({ success: false, err });
-          else return res.status(200).json({ success: true, userInfo, doc });
+          else {
+            req.body.cart.forEach((item) => {
+              Product.findOneAndUpdate(
+                {
+                  $and: [
+                    { _id: item._id },
+                    {
+                      sizeAndQuantity: {
+                        $elemMatch: {
+                          size: item.sizeAndQuantity[0].size,
+                        },
+                      },
+                    },
+                  ],
+                },
+                {
+                  $inc: {
+                    "sizeAndQuantity.$.quantity":
+                      -item.sizeAndQuantity[0].quantity,
+                  },
+                },
+                { new: true },
+                (err, productInfo) => {
+                  if (err) return res.status(400).json({ success: false, err });
+                }
+              );
+            });
+            return res.status(200).json({ success: true, userInfo });
+          }
         });
       }
     }

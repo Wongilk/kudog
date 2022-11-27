@@ -30,19 +30,21 @@ const RightMenu = (props) => {
             <a href="/admin">Admin</a>
           </Menu.Item>
         ) : (
-          ""
-        )}
-        <Menu.Item key="mypage">
-          <a className="text-decoration-none" href="/mypage">
-            MyPage
-          </a>
-        </Menu.Item>
+          <>
+            <Menu.Item key="mypage">
+              <a className="text-decoration-none" href="/mypage">
+                MyPage
+              </a>
+            </Menu.Item>
 
-        <Menu.Item key="cart">
-          <a className="text-decoration-none" href="/user/cart">
-            Cart
-          </a>
-        </Menu.Item>
+            <Menu.Item key="cart">
+              <a className="text-decoration-none" href="/user/cart">
+                Cart
+              </a>
+            </Menu.Item>
+          </>
+        )}
+
         {/* 
         <Menu.Item key="logout">
           <a onClick={onLogoutClick}>Logout</a>

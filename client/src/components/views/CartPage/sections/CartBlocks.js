@@ -7,21 +7,30 @@ const CartBlocks = ({ products, deleteFromCart }) => {
       return `http://localhost:5000/${image}`;
     }
   };
+  console.log(products);
   const renderItems = () =>
     products.map((item, index) => (
       <tr key={index}>
         <td>
           <img
-            style={{ width: "70px" }}
+            className="fill"
+            style={{ width: "100px", height: "100px" }}
             alt="product"
             src={renderImage(item.images)}
           ></img>
         </td>
-        <td>{item.quantity}EA</td>
-        <td>{item.size}</td>
+        <td>{item.brand}</td>
+        <td>{item.title}</td>
+        <td>{item.sizeAndQuantity[0].quantity}EA</td>
+        <td>{item.sizeAndQuantity[0].size}</td>
         <td>{item.price}</td>
-        <td>
-          <button onClick={() => deleteFromCart(item._id, item.size)}>
+        <td className="text-center">
+          <button
+            className="text-center btn border"
+            onClick={() =>
+              deleteFromCart(item._id, item.sizeAndQuantity[0].size)
+            }
+          >
             remove
           </button>
         </td>
@@ -33,10 +42,12 @@ const CartBlocks = ({ products, deleteFromCart }) => {
         <thead>
           <tr>
             <th>Product Image</th>
+            <th>Brand</th>
+            <th>Name</th>
             <th>Quantity</th>
             <th>Size</th>
             <th>Stamps</th>
-            <th>remove from cart</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>{products ? renderItems() : null}</tbody>
@@ -47,3 +58,4 @@ const CartBlocks = ({ products, deleteFromCart }) => {
 };
 
 export default CartBlocks;
+//수정

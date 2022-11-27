@@ -8,17 +8,24 @@ const { Title } = Typography;
 function DeletePage() {
   const [products, setProducts] = useState([]);
   useEffect(() => {
+    getall();
+  }, []);
+
+  const getall = () => {
     axios
       .post("/api/products/get_all")
       .then((response) => setProducts(response.data));
-  }, []);
+  };
 
   const onRemoveProduct = (productId) => {
     let body = {
       productId: productId,
     };
     axios.post("/api/products/remove_product", body).then((response) => {
-      if (response.data.success) alert("삭제 완료");
+      if (response.data.success) {
+        alert("삭제 완료");
+        getall();
+      }
     });
     console.log(productId);
   };
