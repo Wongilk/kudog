@@ -17,7 +17,7 @@ const contactSchema = mongoose.Schema({
   date: {
     type: String,
     // 요거
-    default: new Date().toLocaleString("ko-kr"),
+    default: "",
   },
 });
 const Contact = mongoose.model("Contact", contactSchema);

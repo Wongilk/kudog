@@ -32,6 +32,7 @@ const ContactPage = () => {
         email: email,
         phone: phone,
         content: content,
+        date: new Date().toLocaleString("ko-kr"),
       };
       console.log(body);
 

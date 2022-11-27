@@ -9,7 +9,7 @@ function DeletePage() {
   const [products, setProducts] = useState([]);
   useEffect(() => {
     getall();
-  }, []);
+  }, [products]);
 
   const getall = () => {
     axios

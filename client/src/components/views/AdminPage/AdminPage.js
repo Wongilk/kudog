@@ -85,7 +85,7 @@ const AdminPage = () => {
                 onClick={onIsDeliverClick}
                 style={{ textDecoration: "none", color: "black" }}
               >
-                Deliver
+                Order
               </a>
             </li>
             <li>
