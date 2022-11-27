@@ -24,8 +24,10 @@ const CheckContactPage = () => {
       return (
         <div className="m-3 p-3 border-bottom">
           <p className="text-end">
-            {contact.syncTime.toString().split(" ").slice(0, 5).join(" ")}
+            {/* 요거 */}
+            {contact.date}
           </p>
+
           <p>Writer : {contact.writer}</p>
           <p>Email : {contact.email}</p>
           <p>Phone : {contact.phone}</p>

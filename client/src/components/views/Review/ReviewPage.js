@@ -19,7 +19,14 @@ const ReviewPage = () => {
           ></img>
         </p>
         <p className="mb-0 text-muted">{item.brand}</p>
-        <h5>{item.productName}</h5>
+        <h5>
+          <a
+            href={`http://localhost:3000/product/${item.selectItemId}`}
+            style={{ color: "black" }}
+          >
+            {item.productName}
+          </a>
+        </h5>
         <p className="mb-0">작성자 : {item.email}</p>
         <p className="mb-0">구매 사이즈 : {item.size}</p>
         <p className="bg-light p-2 m-0">{item.description}</p>

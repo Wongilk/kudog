@@ -8,7 +8,6 @@ const ProductDetail = (detail) => {
   const product = detail.detail;
   const dispatch = useDispatch();
   const [selectSize, setSelectSize] = useState("");
-  const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
     getReviews(product);
@@ -17,7 +16,7 @@ const ProductDetail = (detail) => {
   const onClick = () => {
     dispatch(AddToCart(product._id, selectSize)).then((response) => {
       if (response.payload.success) alert("장바구니에 추가됨");
-      else console.log("추가 실패");
+      else alert("추가 실패");
     });
   };
   //상품 사이즈 render

@@ -29,7 +29,11 @@ const HistoryPage = ({ onWriteReviewClick }) => {
         <td>{element.quantity}</td>
         <td>{element.stamps}</td>
         <td>{element.date}</td>
-        <td>{element.dateOfReturn}</td>
+        <td>
+          {element.dateOfReturn
+            ? element.dateOfReturn.split(".").slice(0, 3).join(" .")
+            : "배송중…"}
+        </td>
         <td>
           {element.review ? (
             "written"

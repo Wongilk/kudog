@@ -15,7 +15,7 @@ const WriteReviewPage = ({ proInfoForReview }) => {
   const updateImages = (newImages) => {
     setImages(newImages);
   };
-  console.log(!images);
+
   const onSubmit = () => {
     if (!description || !images) alert("모든 항목을 기입해주세요");
     else {
@@ -44,21 +44,45 @@ const WriteReviewPage = ({ proInfoForReview }) => {
 
       <form>
         <label>brand : </label>
-        <input value={proInfoForReview.brand} />
+        <input
+          className="border p-2 w-100 mb-1"
+          value={proInfoForReview.brand}
+        />
         <br />
         <label>productName : </label>
-        <input value={proInfoForReview.productName} />
+        <input
+          className="border p-2 w-100 mb-1"
+          value={proInfoForReview.productName}
+        />
         <br />
         <label>size : </label>
-        <input value={proInfoForReview.size} />
-        <br />
-        <DoUpload updateImages={updateImages} />
+        <input
+          className="border p-2 w-100 mb-1"
+          value={proInfoForReview.size}
+        />
 
-        <label>review</label>
-        <br />
-        <textarea value={description} onChange={onDescriptionChange} required />
-        <br />
-        <input type="button" onClick={onSubmit} />
+        <p className="mt-3 mb-3">
+          <DoUpload updateImages={updateImages} />
+        </p>
+
+        <p>
+          <textarea
+            className="border p-2 w-100"
+            placeholder="Enter Your Review Here"
+            value={description}
+            onChange={onDescriptionChange}
+            required
+          />
+        </p>
+
+        <p>
+          <input
+            className="btn btn-secondary border w-100"
+            type="button"
+            onClick={onSubmit}
+            value="Submit"
+          />
+        </p>
       </form>
     </div>
   );

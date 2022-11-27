@@ -48,3 +48,7 @@ tr,
 th {
   border: none !important;
 }
+tr {
+  border: none;
+  border-bottom: 1px solid #dddddd;
+}

@@ -105,12 +105,14 @@ const UploadPage = () => {
   };
   return (
     //level : 글자 크기, 1이 가장 큼
-    <div style={{ maxWidth: "700px", margin: "2rem auto" }}>
-      <div style={{ textAlign: "center", marginButtom: "2rem" }}>
-        <Title level={2}>상품 정보 업로드</Title>
-      </div>
+    <div className="w-50">
+      <Title className="mb-3" level={3}>
+        상품 정보 업로드
+      </Title>
+
       <DoUpload updateImages={updateImages} />
-      <Form>
+
+      <Form className="mt-3">
         <label>브랜드</label>
         <br />
         <Select onChange={onBrandChange} style={{ width: "100%" }}>
